@@ -17,10 +17,12 @@ export const styles = (palette: DefaultTheme, important: string = 'none') => {
 
   const addItemFormTextField = {
     width: '100%',
-    borderRadius: '50px',
-    boxShadow: '0px 0px 10px -4px #0072CE',
-    '& .MuiInputBase-root': {
-      borderRadius: '50px',
+    padding: '8px 8px 8px 12px',
+    borderRadius: '5px',
+    color: palette.addItem.form.title[darkMode],
+    boxShadow: `inset 1.5px 1.5px 3px ${palette.app.shadow.first[darkMode]}, inset -1.5px -1.5px 3px  ${palette.app.shadow.second[darkMode]}`,
+    '.MuiInput-input': {
+      padding: 0,
     },
   }
 
@@ -47,9 +49,27 @@ export const styles = (palette: DefaultTheme, important: string = 'none') => {
     alignItems: 'center',
   }
 
+  const addItemFormButton = {
+    color: palette.addItem.form.button[darkMode],
+    backgroundColor: palette.addItem.button[darkMode],
+    boxShadow: `2px 2px 10px ${palette.app.shadow.first[darkMode]},
+      -2px -2px 10px ${palette.app.shadow.second[darkMode]}`,
+
+    '&:active': {
+      boxShadow: `inset 3px 3px 10px ${palette.app.shadow.first[darkMode]},
+        inset -3px -3px 10px ${palette.app.shadow.second[darkMode]}`,
+    },
+    '&:hover': {
+      backgroundColor: palette.addItem.button[darkMode],
+      boxShadow: `2px 2px 10px ${palette.app.shadow.first[darkMode]},
+      -2px -2px 10px ${palette.app.shadow.second[darkMode]}`,
+    },
+  }
+
   return {
     addItemFormImportantContainer,
     addItemFormButtonContainer,
+    addItemFormButton,
     addItemFormTextField,
     addItemFormController,
     addItemImportantTitle,

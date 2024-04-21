@@ -21,7 +21,32 @@ export const styles = (palette: DefaultTheme) => {
   const navBarThemeSelectorIconsContainer = { marginTop: '-8px', width: '40px' }
 
   const navBarThemeSelectorSwitch = {
-    width: '62px',
+    '.MuiSwitch-root': {
+      padding: '10px',
+    },
+    '.MuiSwitch-switchBase:hover': {
+      backgroundColor: 'transparent',
+    },
+    '.MuiSwitch-switchBase': {
+      color: palette.navBar.themeSelector.active[darkMode],
+      padding: '14px',
+    },
+    '.MuiSwitch-thumb': {
+      width: '10px',
+      height: '10px',
+    },
+
+    '.MuiSwitch-track': {
+      background: palette.app.background[darkMode],
+      boxShadow: `5px 5px 10px ${palette.app.shadow.first[darkMode]},-5px -5px 10px ${palette.app.shadow.second[darkMode]}`,
+    },
+
+    '.MuiSwitch-switchBase.Mui-checked:hover': {
+      backgroundColor: 'transparent',
+    },
+    '.MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track': {
+      backgroundColor: 'transparent',
+    },
   }
 
   const navBarThemeSelectorFormController = {

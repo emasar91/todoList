@@ -1,5 +1,7 @@
 import ToDoList from './scene/todoList'
-import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
 import theme from './theme/theme'
 import './index.css'
 import { useMemo } from 'react'

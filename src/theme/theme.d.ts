@@ -28,6 +28,12 @@ declare module 'styled-components' {
           inactive: IThemeMode
         }
       }
+      modal: {
+        cancelButton: {
+          color: IThemeMode
+          background: IThemeMode
+        }
+      }
       addItem: {
         container: {
           hover: IThemeMode

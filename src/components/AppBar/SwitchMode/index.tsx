@@ -16,6 +16,9 @@ const SwitchMode: React.FC<{}> = () => {
         label=''
         control={
           <Switch
+            disableRipple
+            disableTouchRipple
+            disableFocusRipple
             checked={darkMode === 'dark' ? true : false}
             onChange={() => toggleDarkMode()}
             sx={({ palette }) => styles(palette).navBarThemeSelectorSwitch}

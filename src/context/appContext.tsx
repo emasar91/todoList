@@ -8,33 +8,81 @@ const initAppContext = {
   handleCreateTask: () => {},
   handleCompleteTask: () => {},
   handleEditTask: () => {},
+  handleSetTaskToEdit: () => {},
+  setNewOrderTasks: () => {},
+  handleViewTaskModal: () => {},
+  handleDeleteCompletedTasks: () => {},
+  handleDeleteAllTasks: () => {},
+  handleOpenConfirmModal: () => {},
+  handleCloseConfirmModal: () => {},
   tasks: [],
+  viewTask: false,
+  taskToEdit: {
+    id: `` as idTaskI,
+    task: '',
+    important: '',
+    completed: false,
+  },
+  confirmationModal: {
+    open: false,
+    action: '',
+  },
 }
 
 const AppContext = createContext<appContextI>(initAppContext)
 
 const AppContextProvider = (props: any) => {
-  const [darkMode, setDarkMode] = useState<string>(initAppContext.darkMode)
-  const [tasks, setTasks] = useState<taskI[]>(initAppContext.tasks)
-
+  const taskFromStorage = localStorage.getItem('tasks') as string
+  const darkModeFromStorage = localStorage.getItem('darkMode') as string
+  const [darkMode, setDarkMode] = useState<string>(
+    JSON.parse(darkModeFromStorage) || initAppContext.darkMode
+  )
+  const [viewTask, setViewTask] = useState<boolean>(initAppContext.viewTask)
+  const [tasks, setTasks] = useState<taskI[]>(
+    JSON.parse(taskFromStorage) || initAppContext.tasks
+  )
+  const [taskToEdit, setTaskToEdit] = useState<taskI>(initAppContext.taskToEdit)
   const [createEditModal, setCreateEditModal] = useState(
     initAppContext.createEditModal
   )
+  const [confirmationModal, setConfirmationModal] = useState<confirmModalI>(
+    initAppContext.confirmationModal
+  )
 
   const toggleDarkMode = (): void => {
-    setDarkMode((prev) => (prev === 'light' ? 'dark' : 'light'))
+    const mode = darkMode === 'light' ? 'dark' : 'light'
+    setDarkMode(mode)
+    localStorage.setItem('darkMode', JSON.stringify(mode))
   }
 
   const handleOpenModal = (): void => {
     setCreateEditModal(!createEditModal)
   }
 
+  const handleViewTaskModal = (view: boolean): void => {
+    setViewTask(view)
+  }
+
   const handleCreateTask = (task: taskI): void => {
+    localStorage.setItem('tasks', JSON.stringify([...tasks, task]))
     setTasks([...tasks, task])
   }
 
   const handleCompleteTask = (id: idTaskI): void => {
-    setTasks(tasks.filter((task) => task.id !== id))
+    setTasks(
+      tasks.map((task) =>
+        task.id !== id ? task : { ...task, completed: !task.completed }
+      )
+    )
+  }
+
+  const setNewOrderTasks = (tasks: taskI[]): void => {
+    setTasks(tasks)
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }
+
+  const handleSetTaskToEdit = (task: taskI): void => {
+    setTaskToEdit(task)
   }
 
   const handleEditTask = (newTask: taskI): void => {
@@ -52,6 +100,27 @@ const AppContextProvider = (props: any) => {
     )
   }
 
+  const handleDeleteAllTasks = (): void => {
+    setTasks([])
+    localStorage.setItem('tasks', JSON.stringify([]))
+  }
+
+  const handleDeleteCompletedTasks = (): void => {
+    setTasks(tasks.filter((task) => !task.completed))
+    localStorage.setItem(
+      'tasks',
+      JSON.stringify(tasks.filter((task) => !task.completed))
+    )
+  }
+
+  const handleOpenConfirmModal = ({ open, action }: confirmModalI): void => {
+    setConfirmationModal({ open, action })
+  }
+
+  const handleCloseConfirmModal = (): void => {
+    setConfirmationModal(initAppContext.confirmationModal)
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -59,10 +128,20 @@ const AppContextProvider = (props: any) => {
         toggleDarkMode,
         handleOpenModal,
         createEditModal,
+        taskToEdit,
         tasks,
+        viewTask,
+        confirmationModal,
         handleCreateTask,
         handleCompleteTask,
         handleEditTask,
+        handleSetTaskToEdit,
+        setNewOrderTasks,
+        handleViewTaskModal,
+        handleDeleteAllTasks,
+        handleDeleteCompletedTasks,
+        handleOpenConfirmModal,
+        handleCloseConfirmModal,
       }}
       {...props}
     />

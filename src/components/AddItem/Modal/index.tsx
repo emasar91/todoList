@@ -5,8 +5,24 @@ import { styles } from './styles'
 import FormAddItem from './FormAddItem'
 
 const ModalAddItem: React.FC<{}> = () => {
-  const { createEditModal, handleOpenModal } = useAppContext()
-  const handleClose = () => handleOpenModal()
+  const {
+    createEditModal,
+    handleOpenModal,
+    handleSetTaskToEdit,
+    handleViewTaskModal,
+  } = useAppContext()
+  const handleClose = () => {
+    if (createEditModal) {
+      handleSetTaskToEdit({
+        id: '' as idTaskI,
+        task: '',
+        important: '',
+        completed: false,
+      })
+    }
+    handleOpenModal()
+    handleViewTaskModal(false)
+  }
 
   return (
     <Modal
