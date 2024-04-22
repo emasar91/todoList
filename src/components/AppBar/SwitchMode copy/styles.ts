@@ -1,8 +1,6 @@
 export const styles = (disabled?: boolean) => {
   const navBarTasksActionsIconsContainer = {
-    marginTop: '-8px',
     marginLeft: '8px',
-    width: '40px',
     display: 'flex',
   }
 

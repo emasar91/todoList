@@ -7,10 +7,11 @@ const AppBar: React.FC<{}> = () => {
   return (
     <Box sx={({ palette }) => styles(palette).navBarContainer}>
       <TasksActions />
-
-      <Typography sx={({ palette }) => styles(palette).titleNavBar}>
-        Todas las Tareas
-      </Typography>
+      <Box sx={{ flexGrow: 1 }}>
+        <Typography sx={({ palette }) => styles(palette).titleNavBar}>
+          Todas las Tareas
+        </Typography>
+      </Box>
 
       <SelectorMode />
     </Box>
